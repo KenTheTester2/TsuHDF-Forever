@@ -88,6 +88,10 @@ class MasterServerClient:
             else:
                 body['ws_port'] = cfg['websocket_port']
 
+        if 'use_securewebsockets' in cfg and cfg['use_securewebsockets']:
+            if 'secure_websocket_port' in cfg:
+                body['wss_port'] = cfg['secure_websocket_port']
+
         async with http.post(f'{API_BASE_URL}/servers', json=body) as res:
             err_body = await res.text()
             try:
