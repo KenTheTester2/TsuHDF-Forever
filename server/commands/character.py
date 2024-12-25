@@ -242,12 +242,12 @@ def ooc_cmd_charselect(client, arg):
             force_charselect(client, target, " ".join(args[1:]))
     except Exception as ex:
         raise ArgumentError(
-            f"Error encountered: {ex}. Use /charselect <target's id> [character] as a mod or area owner."
+            f"Error: insufficient permissions."
         )
 
 
 def force_charselect(client, target, char=""):
-    if not client.is_mod and client not in target.area.owners:
+    if not client.is_mod:
         raise ClientError(f'Insufficient permissions for {char}')
     if char != "":
         try:
