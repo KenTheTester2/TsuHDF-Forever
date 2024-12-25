@@ -49,6 +49,11 @@ advertise_port: true
 advertising_port: 80
 ad_websocket_port: 80
 
+# Whether or not the server is open to secure websocket connections
+# Do note that this requires special setup on the server side (terminating SSL)
+use_securewebsockets: false
+secure_websocket_port: 50002
+
 # WebAO Asset URL for hosting files. Leave blank to use vanilla
 asset_url:
 
