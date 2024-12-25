@@ -38,6 +38,7 @@ __all__ = [
     "ooc_cmd_peek",
     "ooc_cmd_max_players",
     "ooc_cmd_desc",
+    "ooc_cmd_readdesc",
     "ooc_cmd_edit_ambience",
     "ooc_cmd_lights",
     "ooc_cmd_delay",
@@ -337,14 +338,14 @@ def ooc_cmd_area_kick(client, arg):
             client, TargetType.AFK, args[0], False
         )
     # Kick everyone but owners
-    elif args[0] == "*":
+    elif args[0] == "asdfjksdkfjshdkjf":
         targets = [
             c
             for c in client.area.clients
             if c != client and c != client.area.owners
         ]
     # Kick everyone in area
-    elif args[0] == "**":
+    elif args[0] == "askdhfakjdhslkjfahdsj":
         targets = [
             c
             for c in client.area.clients
@@ -717,14 +718,26 @@ def ooc_cmd_desc(client, arg):
                 raise ClientError("You must be authorized to do that.")
             client.area.desc_dark = arg.strip()
         else:
-            client.area.desc = arg.strip()
+            if not client.is_mod and not (client in client.area.owners):
+                raise ClientError("Must be CM to change area description.")
+            else:
+                client.area.desc = arg.strip()
         desc = arg[:128]
         if len(arg) > len(desc):
             desc += "... Use /desc to read the rest."
-        client.area.broadcast_ooc(
-            f"📃{client.showname} changed the area description to: {desc}."
+        if not client.is_mod and not (client in client.area.owners):
+            raise ClientError("Must be CM of this area to change its description.")        
+        else:
+            client.area.broadcast_ooc(
+                f"📃{client.showname} changed the area description to: {desc}"
         )
         database.log_area("desc.change", client, client.area, message=arg)
+
+
+def ooc_cmd_readdesc(client, arg):
+    """
+    For allowing regular players to view the area description.
+    """
 
 
 @mod_only(area_owners=True)
@@ -828,4 +841,3 @@ def ooc_cmd_force_nonint_pres(client, arg):
         '{} [{}] has set pres in the area to be {}.'.format(
             client.char_name, client.id, answer))
     database.log_area('force_nonint_pres', client, client.area, message=client.area.non_int_pres_only)
-
