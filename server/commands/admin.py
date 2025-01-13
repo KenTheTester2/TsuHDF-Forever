@@ -17,6 +17,7 @@ from .areas import getBGLog
 __all__ = [
     "ooc_cmd_motd",
     "ooc_cmd_help",
+    'ooc_cmd_about',
     "ooc_cmd_kick",
     "ooc_cmd_ban",
     "ooc_cmd_banhdid",
@@ -95,6 +96,11 @@ def ooc_cmd_help(client, arg):
                     f"No such command or submodule ({arg}) has been found in the help docs."
                 )
 
+def ooc_cmd_about(client, _):
+    """
+    Info about the server
+    """
+    client.send_ooc("Welcome to PCF running TsuPCF 2.10 LTS, running PCF Content Pack v1.1.5")
 
 @mod_only()
 def ooc_cmd_kick(client, arg):
