@@ -78,7 +78,7 @@ class Webhooks:
                 s = ""
             else:
                 s = "s"
-            message = f"New modcall received ({mods} moderator{s} online)"
+            message = f"New modcall received '@everyone' ({mods} moderator{s} online)"
 
         description = f"[{current_time} UTC] {char} ({ipid}) in hub [{area.area_manager.id}] {area.area_manager.name} [{area.id}] {area.name} {'without reason (using <2.6?)' if reason is None else f'with reason: {reason}'}"
 
